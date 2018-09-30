@@ -15,12 +15,13 @@ import java.util.List;
 @Model(adaptables = Resource.class)
 public class ArticleContainerModel {
     private static final Logger LOG = LoggerFactory.getLogger(ArticleContainerModel.class);
+    private static final String ARTICLE_SOURCE_DEFAULT = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=80b6529f98b843419195ea022760eeb0";
 
     @ValueMapValue(optional = true)
     private String title;
 
     @ValueMapValue(optional = true)
-    @Default(values = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=80b6529f98b843419195ea022760eeb0")
+    @Default(values = ARTICLE_SOURCE_DEFAULT)
     private String source;
 
     @OSGiService
@@ -31,7 +32,7 @@ public class ArticleContainerModel {
     }
 
     public List<Article> getArticleList() {
-        LOG.error(articleService.getArticlesByUrl(source).get(0).toString());
+        LOG.error("Error occur when pulling artiles from {}", articleService.getArticlesByUrl(source).get(0).toString());
         return articleService.getArticlesByUrl(source);
     }
 }
